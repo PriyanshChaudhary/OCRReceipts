@@ -1,8 +1,10 @@
 # OCR Receipts
 
-This project reads JPEG ride receipts with Tesseract OCR, extracts receipt details, and writes them to an Excel workbook. The workflow is in [OCRScript.ipynb](OCRScript.ipynb).
+This project reads JPEG cab and food receipts with Tesseract OCR, extracts receipt details, and writes them to separate Excel workbooks. The workflow is in [OCRScript.ipynb](OCRScript.ipynb).
 
 The notebook looks for `.jpg` and `.jpeg` files in a `cab_receipts/` folder (or in the project folder itself). For each image, it attempts to read the date, amount, ride/receipt number, and time. Successfully processed images are moved to `processed_receipts/`, and the results are saved to `processed_receipts/cab_receipts.xlsx`.
+
+Food receipt images go in `food_receipts/`. Their delivery time determines whether `valid` is `yes` (9:00 PM or later) or `no` (before 9:00 PM). Food totals above 400 are recorded as 400, and the food results are saved separately to `processed_receipts/food_receipts.xlsx`.
 
 > Receipt images and generated spreadsheets can contain personal information. Both `cab_receipts/` and `processed_receipts/` are excluded from Git by `.gitignore`. Keep them out of public repositories and only share them with people who should see the trip details.
 
@@ -74,6 +76,8 @@ In VS Code, open the cloned project folder, open `OCRScript.ipynb`, choose **Sel
 2. Copy the receipt JPEG images you want to process into `cab_receipts/`.
 3. Open `OCRScript.ipynb` and run its cells from top to bottom.
 4. Check `processed_receipts/cab_receipts.xlsx` for the results. Successfully read images are moved into `processed_receipts/`; images without a detected date or amount are left in the input folder and reported as skipped.
+
+For food receipts, put JPEGs in `food_receipts/`. The food workflow creates `processed_receipts/food_receipts.xlsx` with `date`, `amount`, `receipt_number`, `valid`, and `source_file` columns. It records orders from 9:00 PM onward as valid, marks earlier orders invalid, and caps amounts above 400 at 400. Successfully processed food images are moved to the same `processed_receipts/` folder.
 
 The notebook uses the current working directory as the project folder. Open VS Code at the cloned repository root before running it so the input and output folders are found in the expected place.
 
