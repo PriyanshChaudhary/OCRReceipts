@@ -1,0 +1,14 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Receipt images and generated spreadsheets may contain personal trip details
+cab_receipts/
+processed_receipts/
